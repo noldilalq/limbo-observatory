@@ -92,6 +92,21 @@
   98.9%, 100% { opacity: 0; transform: translate(194px, 82px) rotate(23deg) scaleX(1.35); }
 }
 #cosmos.still > div, #cosmos.still::before { animation-play-state: paused; }
+#cosmos canvas {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+  pointer-events: none;
+  animation: orbital-glide 31s ease-in-out infinite alternate;
+}
+.relay-satellite { width: clamp(116px, 13vw, 220px); left: 28%; top: 11%; opacity: .86; }
+.orbital-telescope { width: clamp(126px, 14vw, 230px); right: 5%; bottom: 9%; opacity: .84; animation-direction: alternate-reverse !important; }
+@keyframes orbital-glide { to { transform: translate(12px, -8px) rotate(4deg); } }
+#cosmos.still canvas { animation-play-state: paused; }
+@media (max-width: 720px) {
+  .relay-satellite { width: 97px; left: 2%; top: 31%; opacity: .7; }
+  .orbital-telescope { width: 104px; right: 1%; bottom: 12%; opacity: .74; }
+}
 @media (max-width: 720px) {
   #cosmos::before { left: 85%; top: 22%; width: 220px; opacity: .64; }
   .sky-moon { left: 85%; top: 22%; }
