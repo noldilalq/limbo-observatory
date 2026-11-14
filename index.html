@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#090915" />
+    <meta
+      name="description"
+      content="Explore every script and the connections that power Limbo in an interactive architecture atlas."
+    />
+    <title>Limbo Observatory — Dependency Atlas</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Limbo Observatory — Dependency Atlas" />
+    <meta
+      property="og:description"
+      content="Explore the scripts and connections behind Limbo in an interactive star atlas."
+    />
+    <meta
+      property="og:image"
+      content="https://noldilalq.github.io/limbo-observatory/assets/social-atlas.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Limbo Observatory Dependency Atlas, with a violet ringed planet."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./icon.svg?v=8924a7e71ea0" />
+    <link rel="stylesheet" href="./cosmos.css?v=65f796e5a036" />
+    <link rel="stylesheet" href="./style.css?v=36b7c75b8f42" />
+    <script defer src="./data.js?v=991-fed2915a67e8"></script>
+    <script defer src="./cosmos.js?v=f4fa7c4beb8f"></script>
+    <script defer src="./app.js?v=015847f1b3e7"></script>
+    <script defer src="./live-atlas.js?v=45d002985690"></script>
+  </head>
+  <body>
+    <div id="cosmos" aria-hidden="true"></div>
+    <header class="topbar">
+      <button id="brand" class="brand" aria-label="Limbo Observatory home">
+        <img src="./icon.svg?v=8924a7e71ea0" alt="" /><span
+          >LIMBO<small>OBSERVATORY</small></span
+        >
+      </button>
+      <nav class="tabs" aria-label="Explore">
+        <button id="atlasTab" class="tab selected">Atlas</button
+        ><button id="indexTab" class="tab">Script index</button>
+      </nav>
+      <div class="header-actions">
+        <button class="search-trigger" id="searchOpen">
+          <i data-icon="search"></i><span>Search the atlas</span
+          ><kbd>/</kbd></button
+        ><button
+          id="guideOpen"
+          class="icon-button"
+          aria-label="Navigation guide"
+          title="Navigation guide"
+        >
+          <i data-icon="help"></i>
+        </button>
+      </div>
+    </header>
+    <main id="workspace">
+      <aside class="rail" id="rail">
+        <div class="intro">
+          <div class="eyebrow">
+            <b class="spectrum"></b>Architecture explorer
+          </div>
+          <h1>
+            Dependency<br /><em>Atlas</em
+            ><span class="title-star" aria-hidden="true">✧</span>
+          </h1>
+          <div class="stats">
+            <div><strong id="statScripts">—</strong><span>Scripts</span></div>
+            <div><strong id="statEdges">—</strong><span>Connections</span></div>
+          </div>
+        </div>
+        <section class="sector-index">
+          <div class="section-title">
+            <h2>Sector directory</h2>
+            <span id="sectorCount"></span>
+          </div>
+          <div id="sectors" class="rows" aria-label="Sectors"></div>
+        </section>
+        <button id="railIndex" class="catalog-link">
+          <i data-icon="list"></i> Open script index <i data-icon="arrow"></i>
+        </button>
+      </aside>
+      <section id="stage" aria-label="Interactive dependency graph">
+        <div class="stage-heading">
+          <div class="view-title">
+            <span class="live-dot"></span> Orbital view
+          </div>
+          <div class="crumb">
+            <button id="universe">Universe</button><span>/</span
+            ><strong id="crumb">All sectors</strong>
+          </div>
+        </div>
+        <button
+          id="links"
+          class="layer-button"
+          aria-pressed="true"
+          title="Show or hide dependency lines"
+        >
+          <i data-icon="links"></i><span>Connections</span>
+        </button>
+        <canvas
+          id="graph"
+          tabindex="0"
+          aria-label="Dependency atlas. Drag to pan and scroll to zoom. Search or open the script index for keyboard navigation."
+        ></canvas>
+        <div id="tooltip" role="status" hidden></div>
+        <section id="inspector" aria-label="Selection details" hidden>
+          <div id="inspectorBody"></div>
+          <button
+            id="inspectorClose"
+            aria-label="Close details"
+            class="icon-button"
+          >
+            <i data-icon="close"></i>
+          </button>
+        </section>
+        <div class="stage-bottom">
+          <div class="plot-caption">
+            <span class="legend-overview"
+              ><span class="legend-star">✧</span> Sector
+              <i class="legend-dot"></i> Script</span
+            >
+            <span class="legend-worlds"
+              ><b class="key-world module"></b> Module
+              <b class="key-world local"></b> Local
+              <b class="key-world server"></b> Script</span
+            >
+            <span class="legend-routes"
+              ><i class="in-route"></i> Incoming
+              <i class="out-route"></i> Outgoing</span
+            >
+          </div>
+          <div class="controls">
+            <button id="minus" aria-label="Zoom out">
+              <i data-icon="minus"></i></button
+            ><output id="zoom">100%</output
+            ><button id="plus" aria-label="Zoom in">
+              <i data-icon="plus"></i></button
+            ><i class="divide"></i
+            ><button
+              id="fit"
+              aria-label="Fit entire graph"
+              title="Fit entire graph (0)"
+            >
+              <i data-icon="fit"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span
+        ><i class="status"></i>
+        <span id="footerStatus">Project snapshot</span></span
+      >
+      <div class="gestures">
+        <span><i data-icon="hand"></i> Drag to orbit</span
+        ><span><i data-icon="zoom"></i> Scroll to zoom</span
+        ><span><i data-icon="select"></i> Select to inspect</span>
+      </div>
+      <span class="footer-end">LIMBO <i>/</i> ARCHITECTURE</span>
+    </footer>
+    <dialog id="library" aria-labelledby="libraryTitle">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow"><b class="spectrum"></b>Observatory</div>
+          <h2 id="libraryTitle">Script index</h2>
+        </div>
+        <button class="icon-button" id="closeLibrary" aria-label="Close search">
+          <i data-icon="close"></i>
+        </button>
+      </div>
+      <label class="query"
+        ><i data-icon="search"></i
+        ><input
+          id="query"
+          type="search"
+          placeholder="Search scripts, sectors or paths"
+          autocomplete="off"
+          aria-label="Search scripts, sectors or paths"
+        /><kbd>Esc</kbd></label
+      >
+      <p id="resultsMeta" aria-live="polite"></p>
+      <div id="results"></div>
+      <div class="dialog-foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span
+        ><span><kbd>↵</kbd> Inspect</span>
+      </div>
+    </dialog>
+    <dialog id="guide" aria-labelledby="guideTitle">
+      <div class="dialog-head">
+        <h2 id="guideTitle">Navigation guide</h2>
+        <button
+          id="closeGuide"
+          class="icon-button"
+          aria-label="Close navigation guide"
+        >
+          <i data-icon="close"></i>
+        </button>
+      </div>
+      <p>
+        Each constellation contains the scripts in one sector. Lines connect
+        scripts with recorded dependencies. Select a star to inspect its
+        incoming and outgoing connections.
+      </p>
+      <dl>
+        <dt>Search the atlas</dt>
+        <dd>/ or Ctrl K</dd>
+        <dt>Zoom in or out</dt>
+        <dd>Scroll, pinch or + / −</dd>
+        <dt>Move around</dt>
+        <dd>Drag or arrow keys</dd>
+        <dt>Fit all sectors</dt>
+        <dd>0</dd>
+        <dt>Close details</dt>
+        <dd>Esc</dd>
+      </dl>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+#cosmos {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  user-select: none;
+  background: #070a14 url("./assets/cosmos-veil.webp") center / cover;
+}
+#cosmos > div, #cosmos::before, #cosmos::after { position: absolute; }
+.sky-nebula {
+  inset: -4%;
+  background: url("./assets/cosmos-filaments.webp") center / cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: .78;
+  animation: nebula-tide 31s ease-in-out infinite alternate;
+}
+.sky-distant-stars, .sky-near-stars { inset: -48px; }
+.sky-distant-stars {
+  background: url("./assets/cosmos-stars-far.webp") 15% 40% / 470px repeat;
+  animation: distant-drift 86s ease-in-out infinite alternate;
+}
+.sky-near-stars {
+  background: url("./assets/cosmos-stars-near.webp") 80% 35% / 470px repeat;
+  animation: near-drift 39s ease-in-out infinite alternate;
+}
+#cosmos::before {
+  content: "";
+  z-index: 1;
+  left: 77%; top: 27%;
+  width: clamp(240px, 31vw, 610px);
+  aspect-ratio: 128 / 79;
+  transform: translate(-50%, -50%);
+  background: url("./assets/cosmos-selene.webp") center / contain no-repeat;
+  opacity: .92;
+  animation: planet-drift 29s ease-in-out infinite alternate;
+}
+.sky-moon {
+  z-index: 2;
+  left: 77%; top: 27%;
+  width: clamp(7px, .8vw, 12px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 26% 24%, #f7e8d9 1%, #d8bdc1 14%, #927688 32%, #282134 64%, #181423 85%);
+  box-shadow: -1px -1px 4px #d2b3c146;
+  animation: moon-orbit 70s linear infinite;
+}
+.sky-meteor {
+  z-index: 1;
+  top: 17%; left: 49%;
+  width: 76px; height: 1px;
+  transform-origin: 100% 50%;
+  background: linear-gradient(90deg, transparent, #d4c3ff66 75%, #f5ecff);
+  opacity: 0;
+  animation: meteor-pass 19s linear 2s infinite;
+}
+.sky-meteor::after {
+  content: "";
+  position: absolute; right: -1px; top: -1px;
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #fff5ef; box-shadow: 0 0 7px 1px #e4c5ff;
+}
+#cosmos::after {
+  content: ""; inset: 0; z-index: 3;
+  background: radial-gradient(ellipse at 57% 44%, transparent 41%, rgb(3 4 11 / 30%) 100%);
+}
+@keyframes nebula-tide {
+  from { transform: translate(-1.5%, 1%) scale(1.01); opacity: .59; }
+  to { transform: translate(2%, -1%) scale(1.055); opacity: .85; }
+}
+@keyframes distant-drift { to { transform: translate(-22px, 12px); } }
+@keyframes near-drift {
+  from { transform: translate(4px, 0); opacity: .85; }
+  to { transform: translate(32px, -18px); opacity: .62; }
+}
+@keyframes planet-drift {
+  from { transform: translate(-50%, -50%) rotate(-1deg); }
+  to { transform: translate(-49%, -53%) rotate(1.6deg); }
+}
+@keyframes moon-orbit {
+  0%, 100% { transform: translate(-10.3vw, 4vw) scale(.88); }
+  24% { transform: translate(0vw, 3vw) scale(1.15); opacity: 1; }
+  49% { transform: translate(10.3vw, -4vw) scale(.88); opacity: 1; }
+  59% { opacity: 0; }
+  85% { transform: translate(-4vw, -1.5vw) scale(.68); opacity: 0; }
+  94% { opacity: 1; }
+}
+@keyframes meteor-pass {
+  0%, 94% { opacity: 0; transform: translate(0, 0) rotate(23deg) scaleX(.45); }
+  95.1% { opacity: .76; }
+  98.9%, 100% { opacity: 0; transform: translate(194px, 82px) rotate(23deg) scaleX(1.35); }
+}
+#cosmos.still > div, #cosmos.still::before { animation-play-state: paused; }
+@media (max-width: 720px) {
+  #cosmos::before { left: 85%; top: 22%; width: 220px; opacity: .64; }
+  .sky-moon { left: 85%; top: 22%; }
+  .sky-nebula { opacity: .6; }
+}
+@media (max-height: 480px) {
+  #cosmos::before { top: 27%; width: min(31vw, 280px); }
+  .sky-moon { top: 27%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #cosmos > div, #cosmos::before { animation-play-state: paused; }
+}
